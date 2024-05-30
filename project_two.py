@@ -59,3 +59,43 @@ print(f"Coefficient: {model.coef_[0]}")
 print(f"Intercept: {model.intercept_}")
 
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the cleaned dataset
+weather_df = pd.read_csv('cleaned_weather_dataset.csv')
+
+# Line Chart: Temperature Trends Over Years
+plt.figure(figsize=(10, 6))
+sns.lineplot(data=weather_df, x='Year', y='Mean')
+plt.title('Temperature Trends Over Years')
+plt.xlabel('Year')
+plt.ylabel('Mean Temperature')
+plt.grid(True)
+plt.show()
+
+
+# Histogram: Distribution of Mean Temperatures
+plt.figure(figsize=(10, 6))
+sns.histplot(weather_df['Mean'], bins=30, kde=True)
+plt.title('Distribution of Mean Temperatures')
+plt.xlabel('Mean Temperature')
+plt.ylabel('Frequency')
+plt.grid(True)
+plt.show()
+
+# Create a new column for decade
+weather_df['Decade'] = (weather_df['Year'] // 10) * 10
+
+# Group by Decade and calculate mean temperature
+decade_means = weather_df.groupby('Decade')['Mean'].mean().reset_index()
+
+# Bar Chart: Average Temperature by Decade
+plt.figure(figsize=(10, 6))
+sns.barplot(data=decade_means, x='Decade', y='Mean')
+plt.title('Average Temperature by Decade')
+plt.xlabel('Decade')
+plt.ylabel('Average Mean Temperature')
+plt.grid(True)
+plt.show()
+
